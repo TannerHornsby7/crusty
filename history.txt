@@ -1,0 +1,16 @@
+#V2
+\\r test
+\\c test
+CREATE TABLE test (a INT, b INT, primary key (a));
+\\i ~/Development/building_slides/crustydb/data.csv
+\\r testdb
+\\c testdb
+CREATE TABLE test (a INT, b INT, primary key (a));
+\\l
+\\reset
+\\r testdb
+\\c testdb
+CREATE TABLE test (a INT, b INT, primary key (a));
+\\i ~/Development/building_slides/crustydb/data.csv test
+\\i ./data.csv test
+\\reset

@@ -1,0 +1,29 @@
+My Page Write Up
+--------------------------------------------------------------------------------
+Design Decisions
+1) header struct with hashmap for slots:
+    I chose to represent the header with a struct and the slot's with a hash map
+    since it allowed an easier interface with which I would work with the values
+    without wasting space on serialization. By maintaining the number of slots I
+    am using, I know how I can repopulate my hashmap from the byte array. And by
+    using a hashmap, I have O(1) access to byte arrays based on slot id's
+2)  Option for open_slot struct property:
+    I chose to use an Option wrapper around my slotid for the open_slot part of the
+    header struct because it allows me to know when the insertions fail much easier
+    and it can prevent invalid insertions.
+3) compaction after each delete
+    I chose to compact after every deletion because it makes insretions much easier.
+    It also makes the entire page much easier to reason about as fragmentation can
+    quickly lead to a large amount of complexity
+
+Time Spent, Likes and Dislikes
+I spent around 35 hours on this project and I really liked the formatting helpers
+that allowed me to visualize how my page was being populated by bytes. The project
+really helped me understand slotted page architecture.
+
+Incomplete Parts
+The only part of my project that is still incomplete is the stress test. I have
+spent the weekend working through the byte visualizations to see what is going
+on with this test but have struggled to identify an exact cause. I believe it has
+something to do with an improper/ineffecient deletion procedure because I noticed
+weird displays of bytes in the tracefile of the stress test.

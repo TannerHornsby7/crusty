@@ -1,0 +1,23 @@
+Storage Manager Write Up
+--------------------------------------------------------------------------------
+Design Decisions
+1) The first design decision I had to make concerned the representation of heap
+    files in the code. I chose to use a struct that just contained the file. I
+    also decided to keep pg_cnt in the struct because it helped make the code
+    more concise.
+2)  The second would be the iterator implementation. I chose to store the current
+    pid and the current record index in the iterator so I would know where i amt
+    within the heapfile.
+3)  Decided to use a hashmap to go from container id's to their respective heap
+    files because it allows fast look ups and insertions.
+
+Time Spent, Likes and Dislikes
+I spent around 30 hours on this project and I loved the new level of understanding
+that I gained from working with the filesystem.
+
+Incomplete Parts
+Stress Test and Inserts both fail when the amt of bytes inserted exceed PAGE_SIZE.
+My code also fails to meet the final bench. With more time, I would fix both of
+these issues by maintining a vector of pages with their sizes for each heap
+file. This way I would be able to find the proper page for insertion without
+having to pull from disk again each time a page is to small.

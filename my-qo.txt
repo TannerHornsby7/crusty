@@ -1,0 +1,29 @@
+# Brief Description and Design Desicions
+## Join
+I implemented the nested loop join by iterating through each realtion and
+combining tuples when their attribute met the condition. This one was relatively
+simple to implement and didn't require much complex design choices on my end, other
+than keeping track of the last seen outer tuple so the iterator doesn't increment
+left before right. The hash equi-join was a little more complex but still not too
+bad, as we just made a hashmap on the inner table and then iterated through the outer
+table checking each tuple for containment in the map.
+
+## Aggregation
+This was much harder than the join and I still don't have some parts of it working
+correctly. In order to aggregate, I used the hash approach based on the vector of fields listed
+in the struct. I added a merge helper to make adding tuples easier and implemented
+additional hashmaps for group count and sum which fixed an issue I had with averaging.
+When I tried doing a running average, I ran into issues with the integer rounding.
+
+# Time Spent and Thoughts
+I spent around 25 hours total on this project. At first, I found it very annoying
+dealing with the volcano interface. But after using it for a while, I found that
+it helped me understand how information flowed between operators better. I really
+enjoyed implementing the aggregation part of the project as that topic was one that
+I understood at a higher level but hadn't bothered to examine in a more low level manner
+and I found it very rewarding.
+
+# Incomplete Parts
+I was stuck on the parts e2e, multi_agg, and multi_agg_groups. I fixed these
+these by adding a hashmap to store tuples for each group and updating my iterator
+and close method.
