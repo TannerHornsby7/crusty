@@ -32,26 +32,6 @@ rustc 1.65.0
 $ cargo --version
 cargo 1.65.0
 ```
-
-## Building project
-To build the entire CrustyDB source code, you would run `cargo build`
-
-CrustyDB is set up as a workspace and various modules/components of the database are broken into separate packages/crates. To build a specific crate (for example common), you would use the following command `cargo build -p common`. Note if a package/crate depends on another crate (e.g. heapstore depends on common and txn_manager) those crates will be built as part of the process. **Note that for the first milestone you will only have access to common and limited part of heapstore**
-
-
-These crates are:
-- `cli-crusty` : a command line interface client binary application that can connect and issue commands/queries to a running CrustyDB server.
-- `common` : shared data structures or logical components needed by everything in CrustyDB. this includes things like tables, errors, logical query plans, ids, some test utilities, etc.
-- `heapstore` : a storage manager for storing data in heap files. milestone `hs` is exclusively in this crate.
-- `memstore` : a poorly written storage manager that keeps everything in memory. it will persist data to files using serde on shutdown, and use these files to recreate the database state at shutdown
-- `optimizer` : a crate for generating the query execution plan and for query optimization
-- `queryexe` : responsible for executing queries. this contains the operator implementations as well as the execution code.
-- `server` : the binary crate for running a CrustyDB server. this will glue all modules (outside a client) together.
-- `txn_manager` : a near empty crate for an optional milestone to implement transactions. the use a `transaction` is embedded in many other crates, but can be safely ignored for the given milestones. There is also the use of a logical timestamp throughout many components. You can safely ignore this.
-- `utilities` : utilities for performance benchmarks that will be used by an optional milestone
-
-There are two other projects outside of crustydb workspace that we will use later `e2e-benchmarks` and `e2e-tests`. These are used for end-to-end testing (eg sending SQL to the server and getting a response).
-
 ## Tests
 
 Most crates have tests that can be run using cargo `cargo test`. Like building you can run tests for a single crate `cargo test -p common`. Note that tests will build/compile code in the tests modules, so you may encounter build errors here that do not show up in a regular build.
